@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "people_categories",
+  "info": {
+    "singularName": "people-category",
+    "pluralName": "people-categories",
+    "displayName": "People categories"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "people": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team-member.team-member",
+      "mappedBy": "category"
+    }
+  }
+}

@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "team-members",
+  "collectionName": "team_members",
   "info": {
     "singularName": "team-member",
     "pluralName": "team-members",
-    "displayName": "Team-members"
+    "displayName": "People"
   },
   "options": {
     "draftAndPublish": true
@@ -24,17 +24,13 @@
       },
       "required": true
     },
-    "image": {
-      "type": "media",
+    "role": {
+      "type": "string",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      },
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ]
+      }
     },
     "shortDescription": {
       "type": "text",
@@ -44,13 +40,26 @@
         }
       }
     },
-    "role": {
-      "type": "string",
+    "image": {
+      "type": "media",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::people-category.people-category",
+      "inversedBy": "people",
+      "required": true
     }
   }
 }

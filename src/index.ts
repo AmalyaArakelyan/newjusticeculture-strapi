@@ -3,9 +3,21 @@ import type { Core } from '@strapi/strapi';
 import { seedBlogCategories } from './bootstrap/seed-blog-categories';
 import { seedBlogPosts } from './bootstrap/seed-blog-posts';
 import { seedEvents } from './bootstrap/seed-events';
+import { seedPeople } from './bootstrap/seed-people';
+import { seedPeopleCategories } from './bootstrap/seed-people-categories';
 
-const PUBLIC_READ_CONTENT_TYPES = ['blog', 'category', 'event'] as const;
-const PUBLIC_CREATE_CONTENT_TYPES = ['event-registration'] as const;
+const PUBLIC_READ_CONTENT_TYPES = [
+  'blog',
+  'category',
+  'event',
+  'people-category',
+  'team-member',
+] as const;
+const PUBLIC_CREATE_CONTENT_TYPES = [
+  'event-registration',
+  'participation-request',
+  'contact-submission',
+] as const;
 
 async function ensurePublicReadPermissions(strapi: Core.Strapi) {
   const roleService = strapi.plugin('users-permissions').service('role');
@@ -39,6 +51,7 @@ async function ensurePublicReadPermissions(strapi: Core.Strapi) {
 
 async function ensurePublicCreatePermissions(strapi: Core.Strapi) {
   const roleService = strapi.plugin('users-permissions').service('role');
+  const permissionService = strapi.plugin('users-permissions').service('permission');
   const roles = await roleService.find();
   const publicRole = roles.find((role: { type: string }) => role.type === 'public');
 
@@ -47,19 +60,43 @@ async function ensurePublicCreatePermissions(strapi: Core.Strapi) {
   }
 
   const role = await roleService.findOne(publicRole.id);
+  let permissionsUpdated = false;
 
   for (const contentType of PUBLIC_CREATE_CONTENT_TYPES) {
     const apiKey = `api::${contentType}`;
     const controller = role.permissions?.[apiKey]?.controllers?.[contentType];
 
-    if (!controller?.create) {
+    if (controller?.create) {
+      if (!controller.create.enabled) {
+        controller.create.enabled = true;
+        permissionsUpdated = true;
+      }
       continue;
     }
 
-    controller.create.enabled = true;
+    const action = `${apiKey}.${contentType}.create`;
+    const existing = await permissionService.findMany({
+      filters: {
+        role: { id: publicRole.id },
+        action: { $eq: action },
+      },
+    });
+
+    if (existing.length === 0) {
+      await permissionService.create({
+        data: {
+          action,
+          role: publicRole.id,
+        },
+      });
+      permissionsUpdated = true;
+      strapi.log.info(`[bootstrap] Enabled public create: ${action}`);
+    }
   }
 
-  await roleService.updateRole(publicRole.id, role);
+  if (permissionsUpdated && role.permissions) {
+    await roleService.updateRole(publicRole.id, role);
+  }
 }
 
 export default {
@@ -70,7 +107,7 @@ export default {
       await ensurePublicReadPermissions(strapi);
       await ensurePublicCreatePermissions(strapi);
       strapi.log.info(
-        '[bootstrap] Public API: read (blog, category, event); create (event-registration)'
+        '[bootstrap] Public API: read (blog, category, event, people); create (event-registration, participation-request, contact-submission)'
       );
     } catch (error) {
       strapi.log.warn('[bootstrap] Could not configure public API permissions', error);
@@ -80,8 +117,10 @@ export default {
       await seedBlogCategories(strapi);
       await seedBlogPosts(strapi);
       await seedEvents(strapi);
+      await seedPeopleCategories(strapi);
+      await seedPeople(strapi);
     } catch (error) {
-      strapi.log.warn('[bootstrap] Could not seed blog/event data', error);
+      strapi.log.warn('[bootstrap] Could not seed blog/event/people data', error);
     }
   },
 };

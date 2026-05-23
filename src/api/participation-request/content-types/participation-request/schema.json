@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "participation_requests",
+  "info": {
+    "singularName": "participation-request",
+    "pluralName": "participation-requests",
+    "displayName": "Participation requests"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "requestType": {
+      "type": "enumeration",
+      "enum": ["volunteer", "sponsor"],
+      "required": true
+    },
+    "fullName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "phone": {
+      "type": "string"
+    },
+    "organization": {
+      "type": "string"
+    },
+    "message": {
+      "type": "text"
+    }
+  }
+}

@@ -585,6 +585,38 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiContactSubmissionContactSubmission
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'contact_submissions';
+  info: {
+    displayName: 'Contact us';
+    pluralName: 'contact-submissions';
+    singularName: 'contact-submission';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    fullName: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-submission.contact-submission'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
+    phone: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiEventRegistrationEventRegistration
   extends Struct.CollectionTypeSchema {
   collectionName: 'event_registrations';
@@ -751,6 +783,85 @@ export interface ApiGeneralCategoryGeneralCategory
   };
 }
 
+export interface ApiParticipationRequestParticipationRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'participation_requests';
+  info: {
+    displayName: 'Participation requests';
+    pluralName: 'participation-requests';
+    singularName: 'participation-request';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    fullName: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::participation-request.participation-request'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
+    organization: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    requestType: Schema.Attribute.Enumeration<['volunteer', 'sponsor']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPeopleCategoryPeopleCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'people_categories';
+  info: {
+    displayName: 'People categories';
+    pluralName: 'people-categories';
+    singularName: 'people-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::people-category.people-category'
+    >;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    people: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::team-member.team-member'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPodcastPodcast extends Struct.CollectionTypeSchema {
   collectionName: 'podcasts';
   info: {
@@ -903,9 +1014,9 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
 }
 
 export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
-  collectionName: 'team-members';
+  collectionName: 'team_members';
   info: {
-    displayName: 'Team-members';
+    displayName: 'People';
     pluralName: 'team-members';
     singularName: 'team-member';
   };
@@ -918,6 +1029,11 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
+    category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::people-category.people-category'
+    > &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -952,6 +1068,7 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1472,9 +1589,12 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::blog.blog': ApiBlogBlog;
       'api::category.category': ApiCategoryCategory;
+      'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::event-registration.event-registration': ApiEventRegistrationEventRegistration;
       'api::event.event': ApiEventEvent;
       'api::general-category.general-category': ApiGeneralCategoryGeneralCategory;
+      'api::participation-request.participation-request': ApiParticipationRequestParticipationRequest;
+      'api::people-category.people-category': ApiPeopleCategoryPeopleCategory;
       'api::podcast.podcast': ApiPodcastPodcast;
       'api::post.post': ApiPostPost;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
