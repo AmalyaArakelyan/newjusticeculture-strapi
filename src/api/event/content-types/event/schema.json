@@ -1,0 +1,110 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Events"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "targetField": "title",
+      "required": true
+    },
+    "shortDescription": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "maxLength": 400
+    },
+    "content": {
+      "type": "blocks",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "coverPhoto": {
+      "type": "media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "galleryPhotos": {
+      "type": "media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "multiple": true,
+      "allowedTypes": ["images"]
+    },
+    "startAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "endAt": {
+      "type": "datetime"
+    },
+    "location": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "googleMapsUrl": {
+      "type": "string"
+    },
+    "registrationUrl": {
+      "type": "string"
+    },
+    "registrationOpen": {
+      "type": "boolean",
+      "default": true
+    },
+    "registrations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::event-registration.event-registration",
+      "mappedBy": "event"
+    },
+    "isOnline": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

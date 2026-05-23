@@ -2,8 +2,10 @@ import type { Core } from '@strapi/strapi';
 
 import { seedBlogCategories } from './bootstrap/seed-blog-categories';
 import { seedBlogPosts } from './bootstrap/seed-blog-posts';
+import { seedEvents } from './bootstrap/seed-events';
 
-const PUBLIC_READ_CONTENT_TYPES = ['blog', 'category'] as const;
+const PUBLIC_READ_CONTENT_TYPES = ['blog', 'category', 'event'] as const;
+const PUBLIC_CREATE_CONTENT_TYPES = ['event-registration'] as const;
 
 async function ensurePublicReadPermissions(strapi: Core.Strapi) {
   const roleService = strapi.plugin('users-permissions').service('role');
@@ -35,14 +37,40 @@ async function ensurePublicReadPermissions(strapi: Core.Strapi) {
   await roleService.updateRole(publicRole.id, role);
 }
 
+async function ensurePublicCreatePermissions(strapi: Core.Strapi) {
+  const roleService = strapi.plugin('users-permissions').service('role');
+  const roles = await roleService.find();
+  const publicRole = roles.find((role: { type: string }) => role.type === 'public');
+
+  if (!publicRole) {
+    return;
+  }
+
+  const role = await roleService.findOne(publicRole.id);
+
+  for (const contentType of PUBLIC_CREATE_CONTENT_TYPES) {
+    const apiKey = `api::${contentType}`;
+    const controller = role.permissions?.[apiKey]?.controllers?.[contentType];
+
+    if (!controller?.create) {
+      continue;
+    }
+
+    controller.create.enabled = true;
+  }
+
+  await roleService.updateRole(publicRole.id, role);
+}
+
 export default {
   register(/* { strapi }: { strapi: Core.Strapi } */) {},
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     try {
       await ensurePublicReadPermissions(strapi);
+      await ensurePublicCreatePermissions(strapi);
       strapi.log.info(
-        '[bootstrap] Public API: find/findOne enabled for blog and category'
+        '[bootstrap] Public API: read (blog, category, event); create (event-registration)'
       );
     } catch (error) {
       strapi.log.warn('[bootstrap] Could not configure public API permissions', error);
@@ -51,8 +79,9 @@ export default {
     try {
       await seedBlogCategories(strapi);
       await seedBlogPosts(strapi);
+      await seedEvents(strapi);
     } catch (error) {
-      strapi.log.warn('[bootstrap] Could not seed blog data', error);
+      strapi.log.warn('[bootstrap] Could not seed blog/event data', error);
     }
   },
 };

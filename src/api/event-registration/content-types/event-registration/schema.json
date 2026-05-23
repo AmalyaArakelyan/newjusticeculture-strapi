@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "event_registrations",
+  "info": {
+    "singularName": "event-registration",
+    "pluralName": "event-registrations",
+    "displayName": "Event registrations"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "fullName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "phone": {
+      "type": "string"
+    },
+    "message": {
+      "type": "text"
+    },
+    "event": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::event.event",
+      "inversedBy": "registrations",
+      "required": true
+    }
+  }
+}

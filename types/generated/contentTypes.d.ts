@@ -585,6 +585,126 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEventRegistrationEventRegistration
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'event_registrations';
+  info: {
+    displayName: 'Event registrations';
+    pluralName: 'event-registrations';
+    singularName: 'event-registration';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    event: Schema.Attribute.Relation<'manyToOne', 'api::event.event'> &
+      Schema.Attribute.Required;
+    fullName: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::event-registration.event-registration'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text;
+    phone: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
+  info: {
+    displayName: 'Events';
+    pluralName: 'events';
+    singularName: 'event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    content: Schema.Attribute.Blocks &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    coverPhoto: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    endAt: Schema.Attribute.DateTime;
+    galleryPhotos: Schema.Attribute.Media<'images', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    googleMapsUrl: Schema.Attribute.String;
+    isOnline: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'>;
+    location: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    registrationOpen: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    registrations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::event-registration.event-registration'
+    >;
+    registrationUrl: Schema.Attribute.String;
+    shortDescription: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 400;
+      }>;
+    slug: Schema.Attribute.UID<'title'> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    startAt: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGeneralCategoryGeneralCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'general-categories';
@@ -1352,6 +1472,8 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::blog.blog': ApiBlogBlog;
       'api::category.category': ApiCategoryCategory;
+      'api::event-registration.event-registration': ApiEventRegistrationEventRegistration;
+      'api::event.event': ApiEventEvent;
       'api::general-category.general-category': ApiGeneralCategoryGeneralCategory;
       'api::podcast.podcast': ApiPodcastPodcast;
       'api::post.post': ApiPostPost;
