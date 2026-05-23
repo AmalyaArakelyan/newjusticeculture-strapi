@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_podcast_preview_images",
+  "info": {
+    "displayName": "Preview Image",
+    "description": "Used for podcast preview images"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  },
+  "config": {}
+}
