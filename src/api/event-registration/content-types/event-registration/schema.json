@@ -10,6 +10,14 @@
     "draftAndPublish": false
   },
   "attributes": {
+    "registeredAt": {
+      "type": "datetime",
+      "pluginOptions": {
+        "content-manager": {
+          "editable": false
+        }
+      }
+    },
     "fullName": {
       "type": "string",
       "required": true

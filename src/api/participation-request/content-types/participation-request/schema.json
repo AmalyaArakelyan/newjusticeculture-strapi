@@ -10,6 +10,14 @@
     "draftAndPublish": false
   },
   "attributes": {
+    "submittedAt": {
+      "type": "datetime",
+      "pluginOptions": {
+        "content-manager": {
+          "editable": false
+        }
+      }
+    },
     "requestType": {
       "type": "enumeration",
       "enum": ["volunteer", "sponsor"],

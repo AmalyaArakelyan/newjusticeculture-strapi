@@ -5,6 +5,8 @@ import { seedBlogPosts } from './bootstrap/seed-blog-posts';
 import { seedEvents } from './bootstrap/seed-events';
 import { seedPeople } from './bootstrap/seed-people';
 import { seedPeopleCategories } from './bootstrap/seed-people-categories';
+import { ensureFormListViewTimestamps } from './bootstrap/form-list-view-timestamps';
+import { registerFormSubmissionTimestamps } from './bootstrap/form-submission-timestamps';
 import { seedStaticPages } from './bootstrap/seed-static-pages';
 
 const PUBLIC_READ_CONTENT_TYPES = [
@@ -104,10 +106,13 @@ async function ensurePublicCreatePermissions(strapi: Core.Strapi) {
 }
 
 export default {
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+  register({ strapi }: { strapi: Core.Strapi }) {
+    registerFormSubmissionTimestamps(strapi);
+  },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     try {
+      await ensureFormListViewTimestamps(strapi);
       await ensurePublicReadPermissions(strapi);
       await ensurePublicCreatePermissions(strapi);
       strapi.log.info(

@@ -679,6 +679,12 @@ export interface ApiContactSubmissionContactSubmission
     message: Schema.Attribute.Text;
     phone: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    submittedAt: Schema.Attribute.DateTime &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          editable: false;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -713,6 +719,12 @@ export interface ApiEventRegistrationEventRegistration
     message: Schema.Attribute.Text;
     phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    registeredAt: Schema.Attribute.DateTime &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          editable: false;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -948,6 +960,12 @@ export interface ApiParticipationRequestParticipationRequest
     publishedAt: Schema.Attribute.DateTime;
     requestType: Schema.Attribute.Enumeration<['volunteer', 'sponsor']> &
       Schema.Attribute.Required;
+    submittedAt: Schema.Attribute.DateTime &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          editable: false;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
