@@ -5,6 +5,7 @@ import { seedBlogPosts } from './bootstrap/seed-blog-posts';
 import { seedEvents } from './bootstrap/seed-events';
 import { seedPeople } from './bootstrap/seed-people';
 import { seedPeopleCategories } from './bootstrap/seed-people-categories';
+import { seedStaticPages } from './bootstrap/seed-static-pages';
 
 const PUBLIC_READ_CONTENT_TYPES = [
   'blog',
@@ -12,6 +13,9 @@ const PUBLIC_READ_CONTENT_TYPES = [
   'event',
   'people-category',
   'team-member',
+  'about-us',
+  'manifest',
+  'rehabilitation-program',
 ] as const;
 const PUBLIC_CREATE_CONTENT_TYPES = [
   'event-registration',
@@ -107,7 +111,7 @@ export default {
       await ensurePublicReadPermissions(strapi);
       await ensurePublicCreatePermissions(strapi);
       strapi.log.info(
-        '[bootstrap] Public API: read (blog, category, event, people); create (event-registration, participation-request, contact-submission)'
+        '[bootstrap] Public API: read (blog, category, event, people, static pages); create (event-registration, participation-request, contact-submission)'
       );
     } catch (error) {
       strapi.log.warn('[bootstrap] Could not configure public API permissions', error);
@@ -119,8 +123,9 @@ export default {
       await seedEvents(strapi);
       await seedPeopleCategories(strapi);
       await seedPeople(strapi);
+      await seedStaticPages(strapi);
     } catch (error) {
-      strapi.log.warn('[bootstrap] Could not seed blog/event/people data', error);
+      strapi.log.warn('[bootstrap] Could not seed blog/event/people/static pages', error);
     }
   },
 };

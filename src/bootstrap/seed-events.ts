@@ -1,9 +1,7 @@
 import type { Core } from '@strapi/strapi';
 
-import {
-  EVENT_SEED_ENTRIES,
-  blocksFromParagraphs,
-} from '../data/events';
+import { EVENT_SEED_ENTRIES } from '../data/events';
+import { paragraphsToHtml } from '../data/rich-text';
 
 const EVENT_UID = 'api::event.event';
 
@@ -36,7 +34,7 @@ export async function seedEvents(strapi: Core.Strapi) {
         title: entry.en.title,
         slug: entry.slug,
         shortDescription: entry.en.shortDescription,
-        content: blocksFromParagraphs(entry.en.paragraphs),
+        content: paragraphsToHtml(entry.en.paragraphs),
         startAt: entry.startAt,
         endAt: entry.endAt,
         location: entry.en.location,
@@ -54,7 +52,7 @@ export async function seedEvents(strapi: Core.Strapi) {
         title: entry.hy.title,
         slug: entry.slug,
         shortDescription: entry.hy.shortDescription,
-        content: blocksFromParagraphs(entry.hy.paragraphs),
+        content: paragraphsToHtml(entry.hy.paragraphs),
         startAt: entry.startAt,
         endAt: entry.endAt,
         location: entry.hy.location,

@@ -44,11 +44,15 @@
       "maxLength": 400
     },
     "content": {
-      "type": "blocks",
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
+      },
+      "options": {
+        "preset": "defaultHtml"
       }
     },
     "coverPhoto": {

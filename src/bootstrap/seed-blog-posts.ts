@@ -1,9 +1,7 @@
 import type { Core } from '@strapi/strapi';
 
-import {
-  BLOG_SEED_POSTS,
-  blocksFromParagraphs,
-} from '../data/blog-posts';
+import { BLOG_SEED_POSTS } from '../data/blog-posts';
+import { paragraphsToHtml } from '../data/rich-text';
 
 const BLOG_UID = 'api::blog.blog';
 const CATEGORY_UID = 'api::category.category';
@@ -63,7 +61,7 @@ export async function seedBlogPosts(strapi: Core.Strapi) {
         title: post.en.title,
         slug: post.slug,
         shortDescription: post.en.shortDescription,
-        content: blocksFromParagraphs(post.en.paragraphs),
+        content: paragraphsToHtml(post.en.paragraphs),
         category: { documentId: categoryDocumentId },
       },
     });
@@ -76,7 +74,7 @@ export async function seedBlogPosts(strapi: Core.Strapi) {
         title: post.hy.title,
         slug: post.slug,
         shortDescription: post.hy.shortDescription,
-        content: blocksFromParagraphs(post.hy.paragraphs),
+        content: paragraphsToHtml(post.hy.paragraphs),
         category: { documentId: categoryDocumentId },
       },
     });
