@@ -1,5 +1,6 @@
 import type { Core } from '@strapi/strapi';
 
+import { seedLocales } from './bootstrap/seed-locales';
 import { seedBlogCategories } from './bootstrap/seed-blog-categories';
 import { seedBlogPosts } from './bootstrap/seed-blog-posts';
 import { seedEvents } from './bootstrap/seed-events';
@@ -111,6 +112,12 @@ export default {
   },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    try {
+      await seedLocales(strapi);
+    } catch (error) {
+      strapi.log.warn('[bootstrap] Could not seed locales', error);
+    }
+
     try {
       await ensureFormListViewTimestamps(strapi);
       await ensurePublicReadPermissions(strapi);
