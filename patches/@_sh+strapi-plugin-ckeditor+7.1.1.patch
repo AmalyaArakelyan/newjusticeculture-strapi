@@ -1,0 +1,26 @@
+diff --git a/node_modules/@_sh/strapi-plugin-ckeditor/dist/_chunks/Field-CmFipUw8.mjs b/node_modules/@_sh/strapi-plugin-ckeditor/dist/_chunks/Field-CmFipUw8.mjs
+index 855e649..6a0bf0b 100644
+--- a/node_modules/@_sh/strapi-plugin-ckeditor/dist/_chunks/Field-CmFipUw8.mjs
++++ b/node_modules/@_sh/strapi-plugin-ckeditor/dist/_chunks/Field-CmFipUw8.mjs
+@@ -646,7 +646,7 @@ const Field = React.forwardRef(
+   }
+ );
+ function compare(oldProps, newProps) {
+-  return oldProps.error === newProps.error && oldProps.labelAction === newProps.labelAction;
++  return oldProps.error === newProps.error && oldProps.labelAction === newProps.labelAction && oldProps.disabled === newProps.disabled;
+ }
+ const MemoizedField = React.memo(Field, compare);
+ export {
+diff --git a/node_modules/@_sh/strapi-plugin-ckeditor/dist/_chunks/Field-DXPrjUnm.js b/node_modules/@_sh/strapi-plugin-ckeditor/dist/_chunks/Field-DXPrjUnm.js
+index bf4781e..1258b7d 100644
+--- a/node_modules/@_sh/strapi-plugin-ckeditor/dist/_chunks/Field-DXPrjUnm.js
++++ b/node_modules/@_sh/strapi-plugin-ckeditor/dist/_chunks/Field-DXPrjUnm.js
+@@ -672,7 +672,7 @@ const Field = React__default.default.forwardRef(
+   }
+ );
+ function compare(oldProps, newProps) {
+-  return oldProps.error === newProps.error && oldProps.labelAction === newProps.labelAction;
++  return oldProps.error === newProps.error && oldProps.labelAction === newProps.labelAction && oldProps.disabled === newProps.disabled;
+ }
+ const MemoizedField = React__default.default.memo(Field, compare);
+ exports.Field = MemoizedField;
