@@ -11,6 +11,7 @@
     "dev": "strapi develop",
     "develop": "strapi develop",
     "seed": "strapi build && node scripts/run-seed.js",
+    "migrate:programs": "strapi build && node scripts/run-migrate-programs.js",
     "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",

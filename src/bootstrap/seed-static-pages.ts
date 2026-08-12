@@ -2,15 +2,22 @@ import type { Core } from '@strapi/strapi';
 
 import {
   ABOUT_US_PAGE_SEED,
+  EDUCATION_CAPACITY_BUILDING_PAGE_SEED,
   MANIFEST_PAGE_SEED,
   REHABILITATION_PROGRAM_PAGE_SEED,
   staticPageSectionsForLocale,
   type StaticPageSeed,
 } from '../data/static-pages';
 
+type StaticPageUid =
+  | 'api::about-us.about-us'
+  | 'api::manifest.manifest'
+  | 'api::rehabilitation-program.rehabilitation-program'
+  | 'api::education-capacity-building.education-capacity-building';
+
 async function hasPublishedEntry(
   strapi: Core.Strapi,
-  uid: 'api::about-us.about-us' | 'api::manifest.manifest' | 'api::rehabilitation-program.rehabilitation-program',
+  uid: StaticPageUid,
   locale: string
 ) {
   const entries = await strapi.documents(uid).findMany({
@@ -42,7 +49,13 @@ async function createLocalizedPage(
 ): Promise<void>;
 async function createLocalizedPage(
   strapi: Core.Strapi,
-  uid: 'api::about-us.about-us' | 'api::manifest.manifest' | 'api::rehabilitation-program.rehabilitation-program',
+  uid: 'api::education-capacity-building.education-capacity-building',
+  label: string,
+  seed: StaticPageSeed
+): Promise<void>;
+async function createLocalizedPage(
+  strapi: Core.Strapi,
+  uid: StaticPageUid,
   label: string,
   seed: StaticPageSeed
 ): Promise<void> {
@@ -92,10 +105,21 @@ export async function seedStaticPages(strapi: Core.Strapi) {
     await createLocalizedPage(
       strapi,
       'api::rehabilitation-program.rehabilitation-program',
-      'Rehabilitation program',
+      'Preventing Violence',
       REHABILITATION_PROGRAM_PAGE_SEED
     );
   } catch (error) {
-    strapi.log.warn('[seed] Could not seed Rehabilitation program', error);
+    strapi.log.warn('[seed] Could not seed Preventing Violence', error);
+  }
+
+  try {
+    await createLocalizedPage(
+      strapi,
+      'api::education-capacity-building.education-capacity-building',
+      'Education & Capacity Building',
+      EDUCATION_CAPACITY_BUILDING_PAGE_SEED
+    );
+  } catch (error) {
+    strapi.log.warn('[seed] Could not seed Education & Capacity Building', error);
   }
 }

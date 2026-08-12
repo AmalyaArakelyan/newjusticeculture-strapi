@@ -654,6 +654,69 @@ export interface ApiContactSubmissionContactSubmission
   };
 }
 
+export interface ApiEducationCapacityBuildingEducationCapacityBuilding
+  extends Struct.SingleTypeSchema {
+  collectionName: 'education_capacity_buildings';
+  info: {
+    displayName: 'Education & Capacity Building';
+    pluralName: 'education-capacity-buildings';
+    singularName: 'education-capacity-building';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    coverPhoto: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    galleryPhotos: Schema.Attribute.Media<'images', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::education-capacity-building.education-capacity-building'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.Component<'default.page-section', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    subtitle: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiEventRegistrationEventRegistration
   extends Struct.CollectionTypeSchema {
   collectionName: 'event_registrations';
@@ -1134,7 +1197,7 @@ export interface ApiRehabilitationProgramRehabilitationProgram
   extends Struct.SingleTypeSchema {
   collectionName: 'rehabilitation_programs';
   info: {
-    displayName: 'Rehabilitation program';
+    displayName: 'Preventing Violence';
     pluralName: 'rehabilitation-programs';
     singularName: 'rehabilitation-program';
   };
@@ -1782,6 +1845,7 @@ declare module '@strapi/strapi' {
       'api::blog.blog': ApiBlogBlog;
       'api::category.category': ApiCategoryCategory;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
+      'api::education-capacity-building.education-capacity-building': ApiEducationCapacityBuildingEducationCapacityBuilding;
       'api::event-registration.event-registration': ApiEventRegistrationEventRegistration;
       'api::event.event': ApiEventEvent;
       'api::general-category.general-category': ApiGeneralCategoryGeneralCategory;

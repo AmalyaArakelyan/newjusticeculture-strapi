@@ -147,7 +147,7 @@ export const MANIFEST_PAGE_SEED: StaticPageSeed = {
 
 export const REHABILITATION_PROGRAM_PAGE_SEED: StaticPageSeed = {
   en: {
-    title: 'Rehabilitation program',
+    title: 'Preventing Violence',
     subtitle:
       'Support for people rebuilding their lives through rights education, dialogue, and community reintegration.',
     sections: [
@@ -175,7 +175,7 @@ export const REHABILITATION_PROGRAM_PAGE_SEED: StaticPageSeed = {
     ],
   },
   hy: {
-    title: 'Ռեաբիլիտացման ծրագիր',
+    title: 'Բռնության կանխարգելում',
     subtitle:
       'Աջակցություն մարդկանց, ովքեր իրավունքների կրթության, երկխոսության և համայնքային վերաինտեգրման միջոցով վերակառուցում են իրենց կյանքը։',
     sections: [
@@ -197,6 +197,65 @@ export const REHABILITATION_PROGRAM_PAGE_SEED: StaticPageSeed = {
         heading: 'Ինչպես միանալ',
         paragraphs: [
           'Կապվեք մեզ հետ կայքի ձևի կամ էլ. փոստի միջոցով՝ ընթացիկ խմբերի և ուղղորդման տարբերակների մասին տեղեկանալու համար։',
+          'Աշխատում ենք հայերեն և անգլերեն՝ Երևանում և մարզերում։',
+        ],
+      },
+    ],
+  },
+};
+
+export const EDUCATION_CAPACITY_BUILDING_PAGE_SEED: StaticPageSeed = {
+  en: {
+    title: 'Education & Capacity Building',
+    subtitle:
+      'Training and curriculum support that strengthens legal literacy, civic education, and organizational capacity across Armenia.',
+    sections: [
+      {
+        heading: 'What we offer',
+        paragraphs: [
+          'Workshops and trainer-of-trainers programs on legal literacy, human rights, and civic education.',
+          'Curriculum development and resources for schools, universities, and civil society organizations.',
+        ],
+      },
+      {
+        heading: 'Who it is for',
+        paragraphs: [
+          'Educators, students, and youth groups looking to build practical knowledge of rights and civic participation.',
+          'Civil society organizations and local institutions seeking to strengthen their internal capacity and training practices.',
+        ],
+      },
+      {
+        heading: 'How to join',
+        paragraphs: [
+          'Contact us through the website form or email to learn about upcoming trainings and partnership opportunities.',
+          'We work in Armenian and English, in Yerevan and across the regions.',
+        ],
+      },
+    ],
+  },
+  hy: {
+    title: 'Կրթություն և կարողությունների զարգացում',
+    subtitle:
+      'Վերապատրաստումներ և ուսումնական աջակցություն, որոնք ամրապնդում են իրավական գրագիտությունը, քաղաքացիական կրթությունը և կազմակերպական կարողությունները Հայաստանում։',
+    sections: [
+      {
+        heading: 'Ինչ ենք առաջարկում',
+        paragraphs: [
+          'Աշխատարաններ և թրեյներների պատրաստման ծրագրեր՝ իրավական գրագիտության, մարդու իրավունքների և քաղաքացիական կրթության թեմայով։',
+          'Ուսումնական ծրագրերի մշակում և ռեսուրսներ դպրոցների, բուհերի և քաղաքացիական հասարակության կազմակերպությունների համար։',
+        ],
+      },
+      {
+        heading: 'Ում համար է',
+        paragraphs: [
+          'Կրթողների, ուսանողների և երիտասարդական խմբերի համար, ովքեր ցանկանում են ձեռք բերել գործնական գիտելիքներ իրավունքների և քաղաքացիական մասնակցության մասին։',
+          'Քաղաքացիական հասարակության կազմակերպությունների և տեղական հաստատությունների համար, որոնք ցանկանում են ամրապնդել իրենց ներքին կարողությունները և վերապատրաստման պրակտիկան։',
+        ],
+      },
+      {
+        heading: 'Ինչպես միանալ',
+        paragraphs: [
+          'Կապվեք մեզ հետ կայքի ձևի կամ էլ. փոստի միջոցով՝ առաջիկա վերապատրաստումների և գործընկերության հնարավորությունների մասին տեղեկանալու համար։',
           'Աշխատում ենք հայերեն և անգլերեն՝ Երևանում և մարզերում։',
         ],
       },

@@ -19,6 +19,7 @@ const PUBLIC_READ_CONTENT_TYPES = [
   'about-us',
   'manifest',
   'rehabilitation-program',
+  'education-capacity-building',
 ] as const;
 const PUBLIC_CREATE_CONTENT_TYPES = [
   'event-registration',
