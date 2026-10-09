@@ -34,6 +34,37 @@
       "targetField": "title",
       "required": true
     },
+    "section": {
+      "type": "enumeration",
+      "enum": [
+        "parakanon",
+        "njc"
+      ],
+      "default": "parakanon",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "youtubeUrl": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "episodeDate": {
+      "type": "date",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
     "videos": {
       "type": "media",
       "pluginOptions": {
